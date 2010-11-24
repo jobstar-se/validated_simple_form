@@ -4,6 +4,8 @@ require "validated_simple_form/validators/format_validator"
 require "validated_simple_form/validators/length_validator"
 require "validated_simple_form/validators/numericality_validator"
 
+require "validated_simple_form/action_view_extensions/form_helper"
+
 module ValidatedSimpleForm
   def self.included(base)
     base.class_eval do
@@ -15,7 +17,6 @@ module ValidatedSimpleForm
   end
 end
 
-#ActiveSupport.on_load(:action_view) do
-#  include ValidatedFields
-#  ActionView::Base.default_form_builder = ValidatedFields::FormBuilder
-#end
+ActiveSupport.on_load(:action_view) do
+  include ValidatedSimpleForm
+end
