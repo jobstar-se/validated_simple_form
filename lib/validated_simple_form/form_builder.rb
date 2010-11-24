@@ -1,5 +1,10 @@
 module ValidatedSimpleForm
-  class FormBuilder < SimpleForm::FormBuilder
+  class FormBuilder < ::SimpleForm::FormBuilder
+    def initialize(object_name, object, template, options, proc)
+      @perform_validations = options[:validate] || true
+      super(object_name, object, template, options, proc)
+    end
+
     def check_box(method, options = {}, checked_value = "1", unchecked_value = "0")
       options = setup_validation_options(method, options)
       super(method, options, checked_value, unchecked_value)
@@ -37,10 +42,7 @@ module ValidatedSimpleForm
     protected
 
     def setup_validation_options(attribute, options)
-      if options[:validate].nil? || options[:validate] != true
-        options.delete(:validate) unless options[:validate].nil?
-        return options
-      end
+      return options unless @perform_validations
 
       validator_names = []
 

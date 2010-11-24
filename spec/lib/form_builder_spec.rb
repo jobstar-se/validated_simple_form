@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe ValidatedSimpleForm::FormBuilder do
+  include ValidatedSimpleForm::ActionViewExtensions::FormHelper
+
   before(:each) do
     @user       = User.new
     @controller = UsersController.new
@@ -8,20 +10,26 @@ describe ValidatedSimpleForm::FormBuilder do
   end
 
   it "should add 'validated' class if there's no class in options" do
-    @builder.text_field(:name, :validate => true).should match(/class="validated"/)
+    validated_simple_form_for(@user, :validate => true) do |f|
+      f.text_field(:name).should match(/class="validated"/)
+    end
   end
 
   it "should add 'validated' class if the 'class' option already has a value assigned" do
-    @builder.text_field(:name, :validate => true, :class => 'foobar').should match(/class="foobar validated"/)
+    validated_simple_form_for(@user, :validate => true) do |f|
+      f.text_field(:name, :validate => true, :class => 'foobar').should match(/class="foobar validated"/)
+    end
   end
 
-  it "should not add any options if the :validate option isn't provided" do
-    input = @builder.text_field(:name)
+  it "should not add any options if the :validate option is false" do
+    validated_simple_form_for(@user, :validate => false) do |f|
+      input = f.text_field(:name)
 
-    input.should_not match(/required="required"/)
-    input.should_not match(/data-required-error-msg="Name is required"/)
-    input.should_not match(/validate="false"/)
-    input.should_not match(/class="validated"/)
+      input.should_not match(/required="required"/)
+      input.should_not match(/data-required-error-msg="Name is required"/)
+      input.should_not match(/validate="false"/)
+      input.should_not match(/class="validated"/)
+    end
   end
 
   it "should add options if the :if Proc returns true" do

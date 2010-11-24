@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "actionpack",  "~> 3.0.3"
   s.add_dependency "activemodel", "~> 3.0.3"
+  s.add_dependency "simple_form"
 
   s.add_development_dependency "bundler", ">= 1.0.0"
   s.add_development_dependency "rspec", "~> 2.0.0"
