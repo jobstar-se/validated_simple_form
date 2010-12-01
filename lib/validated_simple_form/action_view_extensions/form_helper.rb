@@ -11,6 +11,7 @@ module ValidatedSimpleForm
     #
     module FormHelper
       include SimpleForm::ActionViewExtensions::FormHelper
+      include ActionController::RecordIdentifier
 
       [:form_for, :fields_for, :remote_form_for].each do |helper|
         class_eval <<-METHOD, __FILE__, __LINE__

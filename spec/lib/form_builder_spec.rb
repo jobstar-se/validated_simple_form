@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe ValidatedSimpleForm::FormBuilder do
-  include ValidatedSimpleForm::ActionViewExtensions::FormHelper
+  include SpecHelper
 
   before(:each) do
     @user       = User.new
@@ -66,7 +66,7 @@ describe ValidatedSimpleForm::FormBuilder do
     input1 = @builder.text_field(:name,  :validate => true)
     input2 = @builder.text_field(:email, :validate => true)
 
-    input1.should match(/data-validates="presence length"/)
+    input1.should match(/data-validates="length presence"/)
     input2.should match(/data-validates="format"/)
   end
 
@@ -81,7 +81,7 @@ describe ValidatedSimpleForm::FormBuilder do
 
     group.should match(/<div /)
     group.should match(/>foobar</)
-    group.should match(/data-validates="presence length"/)
+    group.should match(/data-validates="length presence"/)
     group.should match(/class="validated radio"/)
   end
 
@@ -91,7 +91,7 @@ describe ValidatedSimpleForm::FormBuilder do
 
     group.should match(/<div /)
     group.should match(/>foobar</)
-    group.should match(/data-validates="presence length"/)
+    group.should match(/data-validates="length presence"/)
     group.should match(/class="validated checkboxes"/)
   end
 end
