@@ -35,5 +35,3 @@ module ValidatedSimpleForm
     end
   end
 end
-
-ActionView::Base.send :include, ValidatedSimpleForm::ActionViewExtensions::FormHelper
